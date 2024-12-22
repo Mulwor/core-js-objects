@@ -34,8 +34,20 @@ function shallowCopy(obj) {
  *    mergeObjects([{a: 1, b: 2}, {b: 3, c: 5}]) => {a: 1, b: 5, c: 5}
  *    mergeObjects([]) => {}
  */
-function mergeObjects(/* objects */) {
-  throw new Error('Not implemented');
+function mergeObjects(objects) {
+  const newObject = {};
+
+  objects.forEach((elementInObject) => {
+    Object.entries(elementInObject).forEach(([key, value]) => {
+      if (!newObject[key]) {
+        newObject[key] = value;
+      } else {
+        newObject[key] += value;
+      }
+    });
+  });
+
+  return newObject;
 }
 
 /**
@@ -51,8 +63,10 @@ function mergeObjects(/* objects */) {
  *    removeProperties({name: 'John', age: 30, city: 'New York'}, 'age') => {name: 'John', city: 'New York'}
  *
  */
-function removeProperties(/* obj, keys */) {
-  throw new Error('Not implemented');
+function removeProperties(obj, keys) {
+  const result = { ...obj };
+  keys.map((key) => delete result[key]);
+  return result;
 }
 
 /**
@@ -134,8 +148,13 @@ function makeWord(/* lettersObject */) {
  *    sellTickets([25, 25, 50]) => true
  *    sellTickets([25, 100]) => false (The seller does not have enough money to give change.)
  */
-function sellTickets(/* queue */) {
-  throw new Error('Not implemented');
+function sellTickets(queue) {
+  return (
+    queue.reduce(
+      (accum, value) => (value > 25 ? accum - value : accum + value),
+      0
+    ) >= 0
+  );
 }
 
 /**
@@ -151,8 +170,15 @@ function sellTickets(/* queue */) {
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
-function Rectangle(/* width, height */) {
-  throw new Error('Not implemented');
+function Rectangle(width, height) {
+  return {
+    width,
+    height,
+
+    getArea() {
+      return this.width * this.height;
+    },
+  };
 }
 
 /**
